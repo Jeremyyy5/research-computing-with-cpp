@@ -1,0 +1,1649 @@
+\section{Lecture 1: C++ for Research}\label{lecture-1-c-for-research}
+
+\subsection{Course Overview}\label{course-overview}
+
+\subsubsection{Part 1}\label{part-1}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Using C++ in research
+\item
+  Better C++
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Reliable
+  \item
+    Reproducible
+  \item
+    Good science
+  \item
+    Libraries
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Part 2}\label{part-2}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  HPC concepts
+\item
+  Shared memory parallelism - \href{http://www.openmp.org}{OpenMP}
+\item
+  Distributed memory parallelism - \href{http://www.open-mpi.org}{MPI}
+\end{itemize}
+
+\subsubsection{Course Aims}\label{course-aims}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Teach how to do research with C++
+\item
+  Optimise your research output
+\item
+  A taster for various technologies
+\item
+  Not just C++ syntax, Google/Compiler could tell you that!
+\end{itemize}
+
+\subsubsection{Pre-requisites}\label{pre-requisites}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Use of command line (Unix) shell
+\item
+  You are already doing some C++
+\item
+  You are familiar with your compiler
+\item
+  (Maybe) You are happy with the concept of classes
+\item
+  (Maybe) You know C++ up to templates?
+\item
+  You are familiar with development eg. version control
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Git: \url{https://git-scm.com/}
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Course Notes}\label{course-notes}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Revise some software Engineering:
+  \href{http://github-pages.ucl.ac.uk/rsd-engineeringcourse/}{MPHY0021}
+\item
+  Register with Moodle: \href{https://moodle.ucl.ac.uk/}{PHAS0100}
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    contact lecturer for key to self-register
+  \item
+    guest key to look around is ``996135''
+  \end{itemize}
+\item
+  Online notes:
+  \href{http://rits.github-pages.ucl.ac.uk/research-computing-with-cpp/}{PHAS0100}
+\end{itemize}
+
+\subsubsection{Course Assessment}\label{course-assessment}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  2 pieces coursework - 40 hours each
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    See assessment section for details
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Course Community}\label{course-community}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  UCL Research Programming Hub:
+  \href{http://research-programming.ucl.ac.uk/}{http://research-programming.ucl.ac.uk}
+\item
+  Slack:
+  \href{https://ucl-programming-hub.slack.com/}{https://ucl-programming-hub.slack.com}
+\end{itemize}
+
+\subsection{Lecture 1: C++ In Research}\label{lecture-1-c-in-research}
+
+\subsubsection{Problems In Research}\label{problems-in-research}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Poor quality software
+\item
+  Excuses
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    I'm not a software engineer
+  \item
+    I don't have time
+  \item
+    It's just a prototype
+  \item
+    I'm unsure of my code (scared to share)
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{C++ Disadvantages}\label{c-disadvantages}
+
+Some people say:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Compiled language
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    (compiler versions, libraries, platform specific etc)
+  \end{itemize}
+\item
+  Perceived as difficult, error prone, wordy, unfriendly syntax
+\item
+  Result: It's more trouble than its worth?
+\end{itemize}
+
+\subsubsection{C++ Advantages}\label{c-advantages}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Fast, code compiled to machine code
+\item
+  Stable, evolving standard, powerful notation, improving
+\item
+  Lots of libraries, Boost, Qt, VTK, ITK etc.
+\item
+  Nice integration with CUDA, OpenACC, OpenCL, OpenMP, OpenMPI
+\item
+  Result: Good reasons to use it, or you may \emph{have} to use it
+\end{itemize}
+
+\subsubsection{Research Programming}\label{research-programming}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Software is always expensive
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Famous Book:
+    \href{http://www.amazon.co.uk/Mythical-Man-month-Essays-Software-Engineering/dp/0201835959/ref=sr_1_1?ie=UTF8\&qid=1452507457\&sr=8-1\&keywords=mythical+man+month}{Mythical
+    Man Month}
+  \end{itemize}
+\item
+  Research programming is different to product development:
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    What is the end product?
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Development Methodology?}\label{development-methodology}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Will software engineering methods help?
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    \href{https://en.wikipedia.org/wiki/Waterfall_model}{Waterfall}
+  \item
+    \href{https://en.wikipedia.org/wiki/Agile_software_development}{Agile}
+  \end{itemize}
+\item
+  At the `concept discovery' stage, probably too early to talk about
+  product development
+\end{itemize}
+
+\subsubsection{Approach}\label{approach}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  What am I trying to achieve?
+\item
+  How do I maximise my research output?
+\item
+  What is the best pathway to success?
+\item
+  How do I de-risk (get results, meet deadlines) my research?
+\item
+  Software is an important part of scientific reproducibility,
+  authorship, credibility.
+\end{itemize}
+
+\subsubsection{1. Types of Code}\label{types-of-code}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  What are you trying to achieve?
+\item
+  Divide code:
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Your algorithm
+  \item
+    Testing code
+  \item
+    Data analysis
+  \item
+    User Interface
+  \item
+    Glue code
+  \item
+    Deployment code
+  \item
+    Scientific output (a paper)
+  \end{itemize}
+\end{itemize}
+
+Question: What type of code is C++ good for? Question: Should all code
+be in C++?
+
+\subsubsection{2. Maximise Your Value}\label{maximise-your-value}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Developer time is expensive
+\item
+  Your brain is your asset
+\item
+  Write as little code as possible
+\item
+  Focus tightly on your hypothesis
+\item
+  Write the minimum code that produces a paper
+\end{itemize}
+
+Don't fall into the trap ``Hey, I'll write a framework for that''
+
+\subsubsection{3. Ask Advice}\label{ask-advice}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Before contemplating a new piece of software
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Ask advice - \href{https://ucl-programming-hub.slack.com/}{Slack
+    Channel}
+  \item
+    Review libraries and use them.
+  \item
+    Check libraries are suitable, and sustainable.
+  \item
+    Read
+    \href{http://development.rc.ucl.ac.uk/training/engineering/ch04packaging/01Libraries.html}{Libraries}
+    section from
+    \href{http://github-pages.ucl.ac.uk/rsd-engineeringcourse/}{Software
+    Engineering} course
+  \item
+    Ask about best practices
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Debunking The Excuses}\label{debunking-the-excuses}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  I'm not a software engineer
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Learn effective, minimal tools
+  \end{itemize}
+\item
+  I don't have time
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Unit testing to save time
+  \item
+    Choose your battles/languages wisely
+  \end{itemize}
+\item
+  I'm unsure of my code
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Share, collaborate
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{What Isn't This Course?}\label{what-isnt-this-course}
+
+We are NOT suggesting that:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  C++ is the solution to all problems.
+\item
+  You should write all parts of your code in C++.
+\end{itemize}
+
+\subsubsection{What Is This Course?}\label{what-is-this-course}
+
+We aim to:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Improve your C++ (and associated technologies).
+\item
+  Introduction to High Performance Computing (HPC).
+\end{itemize}
+
+So that:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Apply it to research in a pragmatic fashion.
+\item
+  You use the right tool for the job.
+\end{itemize}
+
+\subsection{Git}\label{git}
+
+\subsubsection{Git Introduction}\label{git-introduction}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  This is a practical course
+\item
+  We will use git for version control
+\item
+  Submit git repository for coursework
+\item
+  Here we provide a very minimal introduction
+\end{itemize}
+
+\subsubsection{Git Resources}\label{git-resources}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Complete beginner - \href{https://try.github.io}{Try Git}
+\item
+  \href{https://git-scm.com/book/en/v2}{Git book by Scott Chacon}
+\item
+  \href{http://github-pages.ucl.ac.uk/rsd-engineeringcourse/ch02git/}{Git
+  section} of MPHYG001
+\item
+  \href{https://github.com/UCL/rsd-engineeringcourse}{MPHYG001 repo}
+\end{itemize}
+
+\subsubsection{Git Walk Through - 1}\label{git-walk-through---1}
+
+(demo on command line)
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Creating your own repo:
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    git init
+  \item
+    git add
+  \item
+    git commit
+  \item
+    git log
+  \item
+    git status
+  \item
+    git remote add
+  \item
+    git push
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Git Walk Through - 2}\label{git-walk-through---2}
+
+(demo on command line)
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Working on existing repo:
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    git clone
+  \item
+    git add
+  \item
+    git commit
+  \item
+    git log
+  \item
+    git status\\
+  \item
+    git push
+  \item
+    git pull
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Git Walk Through - 3}\label{git-walk-through---3}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Cloning or forking:
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    If you have write permission to a repo: clone it, and make
+    modifications
+  \item
+    If you don't: fork it, to make your own version, then clone that and
+    make modifications.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Homework - 1}\label{homework---1}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Register Github
+\item
+  Register for private repos - free for academia.
+\item
+  Find project of interest - try cloning it, make edits, can you push?
+\item
+  Find project of interest - try forking it, make edits, can you push?
+\end{itemize}
+
+\subsection{CMake}\label{cmake}
+
+\subsubsection{Ever worked in Industry?}\label{ever-worked-in-industry}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  (0-3yrs) Junior Developer - given environment, team support
+\item
+  (4-6yrs) Senior Developer - given environment, leading team
+\item
+  (7+ years) Architect - chose tools, environment, design code
+\item
+  Only cross-platform if product/business demands it
+\item
+  All developers told to use the given platform no choice
+\end{itemize}
+
+\subsubsection{Ever worked in Research?}\label{ever-worked-in-research}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  All prototyping, no scope
+\item
+  Start from scratch, little support
+\item
+  No end product, no nice examples
+\item
+  Cutting edge use of maths/science/technology
+\item
+  Share with others on other platforms
+\item
+  Develop on Windows, run on cluster (Linux)
+\end{itemize}
+
+\subsubsection{Research Software Engineering
+Dilemma}\label{research-software-engineering-dilemma}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Comparing Research with Industry, in Research you have:
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Least experienced developers
+  \item
+    with the least support
+  \item
+    developing cross-platform
+  \item
+    No clear specification or scope
+  \end{itemize}
+\item
+  Struggle of C++ is often not the language its the environment
+\end{itemize}
+
+\subsubsection{Build Environment}\label{build-environment}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Windows: Visual Studio solution files
+\item
+  Linux: Makefiles
+\item
+  Mac: XCode projects / Makefiles
+\end{itemize}
+
+Question: How was your last project built?
+
+\subsubsection{CMake Introduction}\label{cmake-introduction}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  This is a practical course
+\item
+  We will use CMake as a build tool
+\item
+  CMake produces
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Windows: Visual Studio project files
+  \item
+    Linux: Make files
+  \item
+    Mac: XCode projects, Make files
+  \end{itemize}
+\item
+  So you write 1 build language (CMake) and run on multi-platform.
+\item
+  This course will provide most CMake code and boiler plate code for
+  you, so we can focus more on C++. But you are expected to google CMake
+  issues and work with CMake.
+\end{itemize}
+
+\subsubsection{CMake Usage Linux/Mac}\label{cmake-usage-linuxmac}
+
+Demo an ``out-of-source'' build
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cd} \NormalTok{~/build}
+\KeywordTok{git} \NormalTok{clone https://github.com/MattClarkson/CMakeHelloWorld}
+\KeywordTok{mkdir} \NormalTok{CMakeHelloWorld-build}
+\KeywordTok{cd} \NormalTok{CMakeHelloWorld-build}
+\KeywordTok{ccmake} \NormalTok{../CMakeHelloWorld}
+\KeywordTok{make}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Homework - 2}\label{homework---2}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Build https://github.com/MattClarkson/CMakeHelloWorld.git
+\item
+  Ensure you do ``out-of-source'' builds
+\item
+  Use CMake to configure separate Debug and Release versions
+\item
+  Add code to hello.cpp:
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    On Linux/Mac re-compile just using make
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Homework - 3}\label{homework---3}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Build https://github.com/MattClarkson/CMakeHelloWorld.git
+\item
+  Exit all code editors
+\item
+  Rename hello.cpp
+\item
+  Change CMakeLists.txt accordingly
+\item
+  Notice: The executable name and .cpp file name can be different
+\item
+  In your build folder, just try rebuilding.
+\item
+  You should see that CMake is re-triggered, so you get a cmake/compile
+  cycle.
+\end{itemize}
+
+\subsection{CMake Basics}\label{cmake-basics}
+
+\subsubsection{Compiling Basics}\label{compiling-basics}
+
+Question: How does a compiler work?
+
+\subsubsection{How does a Compiler
+Work?}\label{how-does-a-compiler-work}
+
+Question: How does a compiler work?
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  (Don't quote any of this in a compiler theory course!)
+\item
+  Preprocessing .cpp/.cxx into pure source files
+\item
+  Source files compiled, one by one into .o/.obj
+\item
+  executable compiled to .o/.obj
+\item
+  executable linked against all .o, and all libraries
+\end{itemize}
+
+That's what you are trying to describe in CMake.
+
+\subsubsection{CMake - Directory
+Structure}\label{cmake---directory-structure}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  CMake starts with top-level CMakeLists.txt
+\item
+  CMakeLists.txt is read top-to-bottom
+\item
+  All CMake code goes in CMakeLists.txt or files included from a
+  CMakeLists.txt
+\item
+  You can sub-divide your code into separate folders.
+\item
+  If you \texttt{add\_subdirectory}, CMake will go into that directory
+  and start to process the CMakeLists.txt therein. Once finished it will
+  exit, go back to directory above and continue where it left off.
+\item
+  e.g.~top level CMakeLists.txt
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{project}\NormalTok{(MYPROJECT }\OtherTok{VERSION} \NormalTok{0.0.0)}
+\KeywordTok{add_subdirectory}\NormalTok{(Code)}
+\KeywordTok{if}\NormalTok{(BUILD_TESTING)}
+  \KeywordTok{set}\NormalTok{()}
+  \KeywordTok{include_directories}\NormalTok{()}
+  \KeywordTok{add_subdirectory}\NormalTok{(Testing)}
+\KeywordTok{endif}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{CMake - Define Targets}\label{cmake---define-targets}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Describe a target, e.g.~Library, Application, Plugin
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{add_executable}\NormalTok{(hello hello.cpp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Note: You don't write compile commands
+\item
+  You tell CMake what things need compiling to build a given target.
+  CMake works out the compile commands!
+\end{itemize}
+
+\subsubsection{CMake - Order Dependent}\label{cmake---order-dependent}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  You can't say ``build Y and link to X'' if X not defined
+\item
+  So, imagine in a larger project
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{add_library}\NormalTok{(libA a.cpp b.cpp c.cpp)}
+\KeywordTok{add_library}\NormalTok{(libZ x.cpp y.cpp z.cpp)}
+\KeywordTok{target_link_libraries}\NormalTok{(libZ libA)}
+\KeywordTok{add_executable}\NormalTok{(myAlgorithm algo.cpp) }\CommentTok{# contains main()}
+\KeywordTok{target_link_libraries}\NormalTok{(myAlgorithm libA libZ }\DecValTok{$\{THIRD_PARTY_LIBS\}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  So, logically, its a big, ordered set of build commands.
+\end{itemize}
+
+\subsubsection{Homework - 4}\label{homework---4}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Build https://github.com/MattClarkson/CMakeLibraryAndApp.git
+\item
+  Look through .cpp/.h code. Ask questions if you don't understand it.
+\item
+  What is an ``include guard''?
+\item
+  What is a namespace?
+\item
+  Look at .travis.yml and appveyor.yml - cross platform testing, free
+  for open-source
+\item
+  Look at myApp.cpp, does it make sense?
+\item
+  Look at CMakeLists.txt, does it make sense?
+\item
+  Look for examples on the web, e.g.
+  \href{https://lorensen.github.io/VTKExamples/site/Cxx/GeometricObjects/Cone/}{VTK}
+\end{itemize}
+
+\subsection{Intermediate CMake}\label{intermediate-cmake}
+
+\subsubsection{What's next?}\label{whats-next}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Most people learn CMake by pasting snippets from around the web
+\item
+  As project gets larger, its more complex
+\item
+  Researchers tend to just ``stick with what they have.''
+\item
+  i.e.~just keep piling more code into the same file.
+\item
+  Want to show you a reasonable template project.
+\end{itemize}
+
+\subsubsection{Homework - 5}\label{homework---5}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Build https://github.com/MattClarkson/CMakeCatch2.git
+\item
+  If open-source, use travis and appveyor from day 1.
+\item
+  We will go through top-level CMakeLists.txt in class.
+\item
+  See separate \texttt{Code} and \texttt{Testing} folders
+\item
+  Separate \texttt{Lib} and \texttt{CommandLineApps} and
+  \texttt{3rdParty}
+\item
+  You should focus on
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Write a good library
+  \item
+    Unit test it
+  \item
+    Then it can be called from command line, wrapped in Python, used via
+    GUI.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Homework - 6}\label{homework---6}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Try renaming stuff to create a library of your choice.
+\item
+  Create a github account, github repo, Appveyor and Travis account
+\item
+  Try to get your code running on 3 platforms
+\item
+  If you can, consider using this repo for your research
+\item
+  Discuss
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Debug / Release builds
+  \item
+    Static versus Dynamic
+  \item
+    declspec import/export
+  \item
+    Issues with running command line app? Windows/Linux/Mac
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Looking forward}\label{looking-forward}
+
+In the remainder of this course we cover
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Some compiler options
+\item
+  Using libraries
+\item
+  Including libraries in CMake
+\item
+  Unit testing
+\item
+  i.e.~How to put together a C++ project
+\item
+  in addition to actual C++ and HPC
+\end{itemize}
+
+\subsection{Unit Testing}\label{unit-testing}
+
+\subsubsection{What is Unit Testing?}\label{what-is-unit-testing}
+
+At a high level
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Way of testing code.
+\item
+  Unit
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Smallest `atomic' chunk of code
+  \item
+    i.e.~Function, could be a Class
+  \end{itemize}
+\item
+  See also:
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Integration/System Testing
+  \item
+    Regression Testing
+  \item
+    User Acceptance Testing
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Benefits of Unit
+Testing?}\label{benefits-of-unit-testing}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Certainty of correctness
+\item
+  (Scientific Rigour)
+\item
+  Influences and improves design
+\item
+  Confidence to refactor, improve
+\end{itemize}
+
+\subsubsection{Drawbacks for Unit
+Testing?}\label{drawbacks-for-unit-testing}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Don't know how
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    This course will help
+  \end{itemize}
+\item
+  Takes too much time
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Really?
+  \item
+    IT SAVES TIME in the long run
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Unit Testing Frameworks}\label{unit-testing-frameworks}
+
+Generally, all very similar
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  JUnit (Java), NUnit (.net?), CppUnit, phpUnit,
+\item
+  Basically
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Macros (C++), methods (Java) to test conditions
+  \item
+    Macros (C++), reflection (Java) to run/discover tests
+  \item
+    Ways of looking at results.
+
+    \begin{itemize}
+    \itemsep1pt\parskip0pt\parsep0pt
+    \item
+      Java/Eclipse: Integrated with IDE
+    \item
+      Log file or standard output
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\subsection{Unit Testing Example}\label{unit-testing-example}
+
+\subsubsection{How To Start}\label{how-to-start}
+
+We discuss
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Basic Example
+\item
+  Some tips
+\end{itemize}
+
+Then its down to the developer/artist.
+
+\subsubsection{C++ Frameworks}\label{c-frameworks}
+
+To Consider:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  \href{https://github.com/philsquared/Catch}{Catch}
+\item
+  \href{https://code.google.com/p/googletest/}{GoogleTest}
+\item
+  \href{http://qt-project.org/doc/qt-4.8/qtestlib-manual.html}{QTestLib}
+\item
+  \href{http://www.boost.org/doc/libs/1_57_0/libs/test/doc/html/index.html}{BoostTest}
+\item
+  \href{http://cpptest.sourceforge.net/}{CppTest}
+\item
+  \href{http://sourceforge.net/projects/cppunit/}{CppUnit}
+\end{itemize}
+
+\subsubsection{Worked Example}\label{worked-example}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Borrowed from
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    \href{https://github.com/philsquared/Catch/blob/master/docs/tutorial.md}{Catch
+    Tutorial}
+  \item
+    and
+    \href{https://code.google.com/p/googletest/wiki/V1_7_Primer}{Googletest
+    Primer}
+  \end{itemize}
+\item
+  We use \href{https://github.com/philsquared/Catch}{Catch}, so notes
+  are compilable
+\item
+  But the concepts are the same
+\end{itemize}
+
+\subsubsection{Code}\label{code}
+
+To keep it simple for now we do this in one file:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\OtherTok{#define CATCH_CONFIG_MAIN  }\CommentTok{// This tells Catch to provide a main() - only do this in one cpp file}
+\OtherTok{#include "../catch/catch.hpp"}
+
+\DataTypeTok{unsigned} \DataTypeTok{int} \NormalTok{Factorial( }\DataTypeTok{unsigned} \DataTypeTok{int} \NormalTok{number ) \{}
+    \KeywordTok{return} \NormalTok{number <= }\DecValTok{1} \NormalTok{? number : Factorial(number}\DecValTok{-1}\NormalTok{)*number;}
+\NormalTok{\}}
+
+\NormalTok{TEST_CASE( }\StringTok{"Factorials are computed"}\NormalTok{, }\StringTok{"[factorial]"} \NormalTok{) \{}
+    \NormalTok{REQUIRE( Factorial(}\DecValTok{1}\NormalTok{) == }\DecValTok{1} \NormalTok{);}
+    \NormalTok{REQUIRE( Factorial(}\DecValTok{2}\NormalTok{) == }\DecValTok{2} \NormalTok{);}
+    \NormalTok{REQUIRE( Factorial(}\DecValTok{3}\NormalTok{) == }\DecValTok{6} \NormalTok{);}
+    \NormalTok{REQUIRE( Factorial(}\DecValTok{10}\NormalTok{) == }\DecValTok{3628800} \NormalTok{);}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Produces this output when run:
+
+\begin{verbatim}
+===============================================================================
+All tests passed (4 assertions in 1 test case)
+
+\end{verbatim}
+
+\subsubsection{Principles}\label{principles}
+
+So, typically we have
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Some \texttt{\#include} to get test framework
+\item
+  Our code that we want to test
+\item
+  Then make some assertions
+\end{itemize}
+
+\subsubsection{Catch / GoogleTest}\label{catch-googletest}
+
+For example, in \href{https://github.com/philsquared/Catch}{Catch}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \CommentTok{// TEST_CASE(<unique test name>, <test case name>)}
+    \NormalTok{TEST_CASE( }\StringTok{"Factorials are computed"}\NormalTok{, }\StringTok{"[factorial]"} \NormalTok{) \{}
+        \NormalTok{REQUIRE( Factorial(}\DecValTok{2}\NormalTok{) == }\DecValTok{2} \NormalTok{);}
+        \NormalTok{REQUIRE( Factorial(}\DecValTok{3}\NormalTok{) == }\DecValTok{6} \NormalTok{);}
+    \NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+In \href{https://code.google.com/p/googletest/}{GoogleTest}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \CommentTok{// TEST(<test case name>, <unique test name>)}
+    \NormalTok{TEST(FactorialTest, HandlesPositiveInput) \{}
+      \NormalTok{EXPECT_EQ(}\DecValTok{2}\NormalTok{, Factorial(}\DecValTok{2}\NormalTok{));}
+      \NormalTok{EXPECT_EQ(}\DecValTok{6}\NormalTok{, Factorial(}\DecValTok{3}\NormalTok{));}
+    \NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+all done via C++ macros.
+
+\subsubsection{Tests That Fail}\label{tests-that-fail}
+
+What about Factorial of zero? Adding
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \NormalTok{REQUIRE( Factorial(}\DecValTok{0}\NormalTok{) == }\DecValTok{1} \NormalTok{);}
+\end{Highlighting}
+\end{Shaded}
+
+Produces something like:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \NormalTok{factorial2.cc:}\DecValTok{9}\NormalTok{: FAILED:}
+    \NormalTok{REQUIRE( Factorial(}\DecValTok{0}\NormalTok{) == }\DecValTok{1} \NormalTok{)}
+    \NormalTok{with expansion:}
+    \DecValTok{0} \NormalTok{== }\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Fix the Failing Test}\label{fix-the-failing-test}
+
+Leading to:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\OtherTok{#define CATCH_CONFIG_MAIN  }\CommentTok{// This tells Catch to provide a main() - only do this in one cpp file}
+\OtherTok{#include "../catch/catch.hpp"}
+
+\DataTypeTok{unsigned} \DataTypeTok{int} \NormalTok{Factorial( }\DataTypeTok{unsigned} \DataTypeTok{int} \NormalTok{number ) \{}
+    \CommentTok{//return number <= 1 ? number : Factorial(number-1)*number;}
+    \KeywordTok{return} \NormalTok{number > }\DecValTok{1} \NormalTok{? Factorial(number}\DecValTok{-1}\NormalTok{)*number : }\DecValTok{1}\NormalTok{;}
+\NormalTok{\}}
+
+\NormalTok{TEST_CASE( }\StringTok{"Factorials are computed"}\NormalTok{, }\StringTok{"[factorial]"} \NormalTok{) \{}
+    \NormalTok{REQUIRE( Factorial(}\DecValTok{0}\NormalTok{) == }\DecValTok{1} \NormalTok{);}
+    \NormalTok{REQUIRE( Factorial(}\DecValTok{1}\NormalTok{) == }\DecValTok{1} \NormalTok{);}
+    \NormalTok{REQUIRE( Factorial(}\DecValTok{2}\NormalTok{) == }\DecValTok{2} \NormalTok{);}
+    \NormalTok{REQUIRE( Factorial(}\DecValTok{3}\NormalTok{) == }\DecValTok{6} \NormalTok{);}
+    \NormalTok{REQUIRE( Factorial(}\DecValTok{10}\NormalTok{) == }\DecValTok{3628800} \NormalTok{);}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+which passes:
+
+\begin{verbatim}
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+
+\end{verbatim}
+
+\subsubsection{Test Macros}\label{test-macros}
+
+Each framework has a variety of macros to test for failure.
+\href{https://github.com/philsquared/Catch}{Catch} has:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \NormalTok{REQUIRE(expression); }\CommentTok{// stop if fail}
+    \NormalTok{CHECK(expression);   }\CommentTok{// doesn't stop if fails}
+\end{Highlighting}
+\end{Shaded}
+
+If an exception is thrown, it's caught, reported and counts as a
+failure.
+
+Examples:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \NormalTok{CHECK( str == }\StringTok{"string value"} \NormalTok{);}
+    \NormalTok{CHECK( thisReturnsTrue() );}
+    \NormalTok{REQUIRE( i == }\DecValTok{42} \NormalTok{);}
+\end{Highlighting}
+\end{Shaded}
+
+Others:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \NormalTok{REQUIRE_FALSE( expression )}
+    \NormalTok{CHECK_FALSE( expression )}
+    \NormalTok{REQUIRE_THROWS( expression ) # Must }\KeywordTok{throw} \NormalTok{an exception}
+    \NormalTok{CHECK_THROWS( expression ) # Must }\KeywordTok{throw} \NormalTok{an exception, }\KeywordTok{and} \KeywordTok{continue} \NormalTok{testing}
+    \NormalTok{REQUIRE_THROWS_AS( expression, exception type )}
+    \NormalTok{CHECK_THROWS_AS( expression, exception type )}
+    \NormalTok{REQUIRE_NOTHROW( expression )}
+    \NormalTok{CHECK_NOTHROW( expression )}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Testing for Failure}\label{testing-for-failure}
+
+To re-iterate:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  You should test failure cases
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Force a failure
+  \item
+    Check that exception is thrown
+  \item
+    If exception is thrown, test passes
+  \item
+    (Some people get confused, expecting test to fail)
+  \end{itemize}
+\item
+  Examples
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Saving to invalid file name
+  \item
+    Negative numbers passed into double arguments
+  \item
+    Invalid Physical quantities (e.g. -300 Kelvin)
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Setup/Tear Down}\label{setuptear-down}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Some tests require objects to exist in memory
+\item
+  These should be set up
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    for each test
+  \item
+    for a group of tests
+  \end{itemize}
+\item
+  Frameworks do differ in this regards
+\end{itemize}
+
+\subsubsection{Setup/Tear Down in Catch}\label{setuptear-down-in-catch}
+
+Referring to the
+\href{https://github.com/philsquared/Catch/blob/master/docs/tutorial.md}{Catch
+Tutorial}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{TEST_CASE( }\StringTok{"vectors can be sized and resized"}\NormalTok{, }\StringTok{"[vector]"} \NormalTok{) \{}
+
+    \NormalTok{std::vector<}\DataTypeTok{int}\NormalTok{> v( }\DecValTok{5} \NormalTok{);}
+
+    \NormalTok{REQUIRE( v.size() == }\DecValTok{5} \NormalTok{);}
+    \NormalTok{REQUIRE( v.capacity() >= }\DecValTok{5} \NormalTok{);}
+
+    \NormalTok{SECTION( }\StringTok{"resizing bigger changes size and capacity"} \NormalTok{) \{}
+        \NormalTok{v.resize( }\DecValTok{10} \NormalTok{);}
+
+        \NormalTok{REQUIRE( v.size() == }\DecValTok{10} \NormalTok{);}
+        \NormalTok{REQUIRE( v.capacity() >= }\DecValTok{10} \NormalTok{);}
+    \NormalTok{\}}
+    \NormalTok{SECTION( }\StringTok{"resizing smaller changes size but not capacity"} \NormalTok{) \{}
+        \NormalTok{v.resize( }\DecValTok{0} \NormalTok{);}
+
+        \NormalTok{REQUIRE( v.size() == }\DecValTok{0} \NormalTok{);}
+        \NormalTok{REQUIRE( v.capacity() >= }\DecValTok{5} \NormalTok{);}
+    \NormalTok{\}}
+    \NormalTok{SECTION( }\StringTok{"reserving bigger changes capacity but not size"} \NormalTok{) \{}
+        \NormalTok{v.reserve( }\DecValTok{10} \NormalTok{);}
+
+        \NormalTok{REQUIRE( v.size() == }\DecValTok{5} \NormalTok{);}
+        \NormalTok{REQUIRE( v.capacity() >= }\DecValTok{10} \NormalTok{);}
+    \NormalTok{\}}
+    \NormalTok{SECTION( }\StringTok{"reserving smaller does not change size or capacity"} \NormalTok{) \{}
+        \NormalTok{v.reserve( }\DecValTok{0} \NormalTok{);}
+
+        \NormalTok{REQUIRE( v.size() == }\DecValTok{5} \NormalTok{);}
+        \NormalTok{REQUIRE( v.capacity() >= }\DecValTok{5} \NormalTok{);}
+    \NormalTok{\}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+So, Setup/Tear down is done before/after each section.
+
+\subsection{Unit Testing Tips}\label{unit-testing-tips}
+
+\subsubsection{C++ design}\label{c-design}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Stuff from above applies to Classes / Functions
+\item
+  Think about arguments:
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Code should be hard to use incorrectly.
+  \item
+    Use \texttt{const}, \texttt{unsigned} etc.
+  \item
+    Testing forces you to sort these out.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Test Driven Development
+(TDD)}\label{test-driven-development-tdd}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Methodology
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Write a test
+  \item
+    Run test, should fail
+  \item
+    Implement/Debug functionality
+  \item
+    Run test
+
+    \begin{enumerate}
+    \def\labelenumii{\arabic{enumii}.}
+    \itemsep1pt\parskip0pt\parsep0pt
+    \item
+      if succeed goto 5
+    \item
+      else goto 3
+    \end{enumerate}
+  \item
+    Refactor to tidy up
+  \end{enumerate}
+\end{itemize}
+
+\subsubsection{TDD in practice}\label{tdd-in-practice}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Aim to get good coverage
+\item
+  Some people quote 70\% or more
+\item
+  What are the downsides?
+\item
+  Don't write `brittle' tests
+\end{itemize}
+
+\subsubsection{Behaviour Driven Development
+(BDD)}\label{behaviour-driven-development-bdd}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Behaviour Driven Development (BDD)
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Refers to a
+    \href{https://en.wikipedia.org/wiki/Behavior-driven_development}{whole
+    area} of software engineering
+  \item
+    With associated tools and practices
+  \item
+    Think about end-user perspective
+  \item
+    Think about the desired behaviour not the implementation
+  \item
+    See
+    \href{https://codeutopia.net/blog/2015/03/01/unit-testing-tdd-and-bdd/}{Jani
+    Hartikainen} article.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{TDD Vs BDD}\label{tdd-vs-bdd}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  TDD
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Test/Design based on methods available
+  \item
+    Often ties in implementation details
+  \end{itemize}
+\item
+  BDD
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Test/Design based on behaviour\\
+  \item
+    Code to interfaces (later in course)
+  \end{itemize}
+\item
+  Subtly different
+\item
+  Aim for BDD
+\end{itemize}
+
+\subsubsection{Anti-Pattern 1:
+Setters/Getters}\label{anti-pattern-1-settersgetters}
+
+Testing every Setter/Getter.
+
+Consider:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+   \KeywordTok{class} \NormalTok{Atom \{}
+
+     \KeywordTok{public}\NormalTok{:}
+       \DataTypeTok{void} \NormalTok{SetAtomicNumber(}\DataTypeTok{const} \DataTypeTok{int}\NormalTok{& number) \{ m_AtomicNumber = number; \}}
+       \DataTypeTok{int} \NormalTok{GetAtomicNumber() }\DataTypeTok{const} \NormalTok{\{ }\KeywordTok{return} \NormalTok{m_AtomicNumber; \}}
+       \DataTypeTok{void} \NormalTok{SetName(}\DataTypeTok{const} \NormalTok{std::string& name) \{ m_Name = name; \}}
+       \NormalTok{std::string GetName() }\DataTypeTok{const} \NormalTok{\{ }\KeywordTok{return} \NormalTok{m_Name; \}}
+     \KeywordTok{private}\NormalTok{:}
+       \DataTypeTok{int} \NormalTok{m_AtomicNumber;}
+       \NormalTok{std::string m_Name;}
+   \NormalTok{\};}
+\end{Highlighting}
+\end{Shaded}
+
+and tests like:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \NormalTok{TEST_CASE( }\StringTok{"Testing Setters/Getters"}\NormalTok{, }\StringTok{"[Atom]"} \NormalTok{) \{}
+
+        \NormalTok{Atom a;}
+
+        \NormalTok{a.SetAtomicNumber(}\DecValTok{1}\NormalTok{);}
+        \NormalTok{REQUIRE( a.GetAtomicNumber() == }\DecValTok{1}\NormalTok{);}
+        \NormalTok{a.SetName(}\StringTok{"Hydrogen"}\NormalTok{);}
+        \NormalTok{REQUIRE( a.GetName() == }\StringTok{"Hydrogen"}\NormalTok{);}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  It feels tedious
+\item
+  But you want good coverage
+\item
+  This often puts people off testing
+\item
+  It also produces ``brittle'', where 1 change breaks many things
+\end{itemize}
+
+\subsubsection{Anti-Pattern 1:
+Suggestion.}\label{anti-pattern-1-suggestion.}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Focus on behaviour.
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    What would end-user expect to be doing?
+  \item
+    How would end-user be using this class?
+  \item
+    Write tests that follow the use-case
+  \item
+    Gives a more logical grouping
+  \item
+    One test can cover \textgreater{} 1 function
+  \item
+    i.e.~move away from slavishly testing each function
+  \end{itemize}
+\item
+  Minimise interface.
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Provide the bare number of methods
+  \item
+    Don't provide setters if you don't want them
+  \item
+    Don't provide getters unless the user needs something
+  \item
+    Less to test. Use documentation to describe why.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Anti-Pattern 2: Constructing Dependent
+Classes}\label{anti-pattern-2-constructing-dependent-classes}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Sometimes, by necessity we test groups of classes
+\item
+  Or one class genuinely Has-A contained class
+\item
+  But the contained class is expensive, or could be changed in future
+\end{itemize}
+
+\subsubsection{Anti-Pattern 2:
+Suggestion}\label{anti-pattern-2-suggestion}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Read up on
+  \href{https://martinfowler.com/articles/injection.html}{Dependency
+  Injection}
+\item
+  Enables you to create and inject dummy test classes
+\item
+  So, testing again used to break down design, and increase flexibility
+\end{itemize}
+
+\subsubsection{Summary BDD Vs TDD}\label{summary-bdd-vs-tdd}
+
+Aim to write:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Most concise description of requirements as unit tests
+\item
+  Smallest amount of code to pass tests
+\item
+  \ldots{} i.e.~based on behaviour
+\end{itemize}
+
+\subsection{Any Questions?}\label{any-questions}
+
+\subsubsection{Homework - Overview}\label{homework---overview}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Example git repo, CMake, Catch template project:
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    \href{https://github.com/MattClarkson/CMakeCatch2}{CMakeCatch2} -
+    Simple
+  \item
+    \href{https://github.com/MattClarkson/CMakeCatchTemplate}{CMakeCatchTemplate}
+    - Complex
+  \end{itemize}
+\item
+  You should
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Clone, Build.
+  \item
+    Add unit test in Testing
+  \item
+    Run via ctest
+  \item
+    Find log file
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Homework - 7}\label{homework---7}
+
+\begin{itemize}
+\item
+  Imagine a simple function, e.g.~to add two numbers.
+\item
+  Play with unit tests until you understand the difference between:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int} \NormalTok{AddTwoNumbers(}\DataTypeTok{int} \NormalTok{a, }\DataTypeTok{int} \NormalTok{b);}
+\DataTypeTok{int} \NormalTok{AddTwoNumbers(}\DataTypeTok{const} \DataTypeTok{int}\NormalTok{& a, }\DataTypeTok{const} \DataTypeTok{int}\NormalTok{&b);}
+\DataTypeTok{void} \NormalTok{AddTwoNumbers(}\DataTypeTok{int}\NormalTok{* a, }\DataTypeTok{int}\NormalTok{*b, }\DataTypeTok{int}\NormalTok{* output);}
+\DataTypeTok{void} \NormalTok{AddTwoNumbers(}\DataTypeTok{const} \DataTypeTok{int}\NormalTok{* }\DataTypeTok{const} \NormalTok{a, }\DataTypeTok{const} \DataTypeTok{int}\NormalTok{* }\DataTypeTok{const} \NormalTok{b);}
+\end{Highlighting}
+\end{Shaded}
+
+  Now imagine, instead of integers, the variables all contained a large
+  Image. Which type of function declaration would you use?
+\end{itemize}
+
+\subsubsection{Homework - 8}\label{homework---8}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Write a Fraction class
+\item
+  Write a print function to print nicely formatted fractions
+\item
+  Does the print function live inside or outside of the class?
+\item
+  Write a method \texttt{simplify()} which will simplify the fraction.
+\item
+  Unit test until you have at least got the hang of unit testing
+\item
+  Review your function arguments and return types
+\end{itemize}
