@@ -1,0 +1,778 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>Lecture 7: Performance Programming</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Lecture 7: Performance Programming
+
+---
+
+# Why care about performance?
+
+* I've got access to a big HPC, why should I worry about performance?
+* Run more models, at higher detail and get results back faster
+
+---
+
+# How to write high performance code
+
+---
+
+# How to write high performance code
+* No:
+
+# How to create a high performance program
+*  Performance comes from structure, not syntax
+*  Algorithms with lower complexity
+   *  But avoid large leading constants
+*  Optimise hot loops
+*  Fetch from memory as infrequently as possible
+*  Access data already in cache
+
+---
+
+# How to create a high performance program
+## Time your code
+* When optimising, make sure that changes are making a measureable difference
+* Time your code
+* `time`
+  * a prefix command that returns the total run time of the program
+  * `time` *`command options`*
+* C++11 provides an extensive time library
+
+---
+
+# How to create a high performance program
+## Time your code
+### `std::chrono`
+* `#include <chrono>`
+* `std::chrono::system_clock`
+  * Wall time clock, system wide
+* `std::chrono::steady_clock`
+  * Monotonic clock that will never be adjusted
+* `std::chrono::high_resolution_clock`
+  * Highest resolution clock tha thte system provides
+  * May be the same as `system_clock`
+* All clocks provide a `now()` member function
+
+---
+
+# How to create a high performance program
+## Time your code
+### `std::chrono`
+* `std::chrono::time_point`
+  * represents the concept of a point in time
+  * class of the return value of the `now()` member functions
+  * can be added and subtracted top manipulate time
+* `std::chrono::duration`
+  * represents a duration of time
+  * can be converted directly from a floating point value
+  * `std::chrono::duration<double, std::milli> dur = fp_dur`
+  * an integer duration can be created using
+    `std::chrono::duration_cast<>`
+  * `dur = std::chrono::duration_cast<std::chrono::milliseconds>(t_diff)`
+
+---
+
+# How to create a high performance program
+## Time your code
+### Timing with std::chrono
+* Start the timer, and assign the current timestamp
+  * `auto start = std::chrono::steady_clock::now()`
+* Run the code to be timed
+* Stop the timer, assigning the current timestamp
+  * `auto stop = std::chrono::steady_clock::now()`
+* Calcuate the duration, and cast to milliseconds (or seconds &c.)
+  * `auto dur =
+    std::chrono::duration_cast<std::chrono:milliseconds>(stop -
+    start)`
+* Print the duration, record it for later use...
+
+---
+
+# How to create a high performance program
+## Big O notation
+* Computational complexity of an algorithm
+* How much work your algorithm does per element that is has to work on
+* An informal notation from algorithmic analysis
+* Asymptotic behaviour of the alogrithm as a function of problem
+      size
+* Ignores constant leading factors
+
+---
+
+# How to create a high performance program
+## Big O notation
+### Big O: typical complexities
+* _O_(1)
+* _O_(log _n_)
+* _O_(_n_)
+* _O_(_n_ log _n_)
+* _O_(_n_²)
+* _O_(e_ⁿ_)
+* _O_(_n_!)
+
+---
+
+# How to create a high performance program
+## Big O notation
+### Big O: rules
+* _O_(3 * _f_(_n_)) = _O_(_f_(_n_))
+* _O_(_f_(_n_) + _g_(_n_)) = _O_(_f_(_n_))
+  * if _f_(_n_) > _g_(_n_)
+
+---
+
+# How to create a high performance program
+## Big O notation
+### Big O: Sorting
+* Sorting lists of integers
+* Easy to understand
+* Easy to visualise
+* Algorithms can have very different complexities
+
+---
+
+# How to create a high performance program
+## Big O notation
+### Bubble sort: _n_²
+* Run through the list, swapping any pairs of integers that are in the
+  wrong order
+( Animation from wikipedia)
+* The each value must be bubbled through a fraction of the list
+* The list has _n_ values
+* Each moved ~_n_ places through the list
+* _n_ × _n_ = _n_²
+
+---
+
+# How to create a high performance program
+## Big O notation
+### Merge sort: _n_ log _n_
+* Divide the list into n 1-element lists
+* Sort these (easy!)
+* Merge pairs of the sorted 1- element lists into sorted 2-element
+  lists
+* Merge pairs of the sorted 2-element lists into sorted 4-element
+  lists
+* And so on, until the whole list is sorted
+* Each level of merging touches each of the _n_ elements exactly once
+* There are log₂ _n_ levels of merging
+* _n_ log _n_
+
+---
+
+# How to create a high performance program
+## Big O notation
+### Special mention: Bogo sort _n_!
+* Shuffle the elements in the list
+* Check if they are all sorted
+* _n_! permutations possible
+
+---
+
+# How to create a high performance program
+## Big O notation
+### Matrix multiplication
+* _n_³ naive
+* at least _n_²
+* Progess in algorithm exponent
+   * 2.807: Strassen, 1969
+   * 2.376: Coppersmith-Winograd, 1990
+   * 2.3729: Williams, 2013
+   * 2.37286: Le Gall, 2014
+* Post-Strassen algorithms are only more efficient for matrices too
+  large for any modern computer
+
+---
+
+# How to create a high performance program
+## Big O notation
+
+# Timing and Big-O hands-on
+
+---
+
+# How to create a high performance program
+## When not to care about performance
+
+* Other things (library calls, I/O) take most of the time
+* Called infrequently
+* Testing
+* Early development
+	
+---
+
+# How to create a high performance program
+## When not to care about performance
+### Premature optimisation
+
+* "Premature optimisation is the root of all evil"
+* Don't optimise until you need to
+* Get the right result first
+* Only optimise with the help of unit testing
+* Optimise hot code
+* Don't spend time reducing the run time of code that is run only
+   a few times
+* Know what effect you are having
+* Instrument the code
+* Repeatable measurements
+	
+---
+
+# How to create a high performance program
+## How does a computer work?
+* Processors
+* Cores
+* Memory
+* Cache
+  * Cache: an analogy
+
+---
+
+# How to create a high performance program
+## How does a computer work?
+### Processors
+* Brain of the computer
+* Converts one set of signals (instructions) in to a state, which acts
+  to transform a second set of binary signals (data)
+* Controls networking and I/O by sending other signals to peripheral components
+
+---
+
+# How to create a high performance program
+## How does a computer work?
+### Cores
+* Early CPUs had one core, executing one stream of instructions on one
+  stream of data
+* Multi-core CPUs
+  * IBM POWER 4, 2001
+  * Intel Pentium D, 2005
+  * AMD Athlon 64 x2, 2005
+* Multiple streams of data and instructions on the same physical chip
+* Share several peripheral components (especially cache)
+
+---
+
+# How to create a high performance program
+## How does a computer work?
+### Memory
+* Stable or quasi-stable electronic gates (or other methods)
+* Store values for and from computation
+* Until power-off: volatile
+* Faster access than permanent storage (HDD, SSD)
+* Slower than on-chip resources
+
+---
+
+# How to create a high performance program
+## How does a computer work?
+### Cache
+* On-chip fast memory
+* Much smaller than system memory
+* Optimizing cache access is important for highest perfomance
+* Heirarchy of fast, smaller cache (L1, L2, L3)
+* Stores system memory in lines of nearby data
+
+---
+
+# How to create a high performance program
+## How does a computer work?
+### Cache: Desk analogy
+
+You are working at your desk.
+
+1.  Registers: Your working memory
+2.  L1 cache: Things on your desk, split into:
+3.  L1i cache: Your to-do list (3)
+4.  L1d cache: The data you are working on (3)
+5.  L2 cache: The book on your windowsill. Might be shared with your
+     coworkers. (30)
+6.  L3 cache: The bookshelf in the office (80)
+7.  Main memory: The bookshelves in the corridor (200)
+8.  HDD/SSD: The library in the neighbouring building (10000)
+9.  The internet: Ordering books from the stacks of the British Library (100000)
+
+---
+
+# How to create a high performance program
+## Single core optimisation
+* Better algorithms
+* Lower asymptotic complexity
+* Inner loops should do more work per iteration
+* Minimise memory access
+* Cache coherency
+
+---
+
+# How to create a high performance program
+## Compiler optimisation
+* Compilers will perform analysis on code and adjust compilation for
+  performancce
+* Higher optimisation levels mean longer compile times
+* Controlled by `-O` options
+  * All optimisation off `O0`
+  * Up to maximum optimisation `O3`
+* Unroll loops, reorder calculations, more intelligent memory access
+* More advanced floating point operations
+  * Vectorisation
+
+---
+
+# How to create a high performance program
+## Cache hits and misses
+* The program requests an address
+* The CPU looks up whether the associated address is in any of its
+  caches in turn (L1, L2, L3)
+* Cache hit: It is loaded. Fetch the data from the cache
+* Cache miss: look up in the cache one level up
+* Or if it's not in L3 cache, fetch it from main memory
+* Write it and the relevant cache line to L3, L2, L1 cache and into the CPU register
+* Cache line: a block of data including the requested value.
+* Data near the requested value have already been loaded into cache
+
+---
+
+# How to create a high performance program
+## Loop order and caching hands-on
+
+---
+
+# How to create a high performance program
+## Execution units
+* Sub-units of the CPU
+* Execute the instructions on the CPU
+* Arithmetic Logic Unit (ALU)
+* Address Generation Unit (AGU)
+* Floating Point Unit (FPU)
+* Load-store unit (LSU)
+* And others
+* Most modern CPUs have multiple parallel execution units
+  * Superscalar design
+* Can dispatch more than one instruction per clock cycle
+
+---
+
+# How to create a high performance program
+## How do modern computers work?
+* Multiple core
+* Shared cache
+* Superscalar execution
+* Out-of-order execution
+* Branch prediction
+* Increase throughput at constant clock speed
+
+---
+
+# Parallel computing
+* It is very easy to schedule calculations when there is one worker
+  using one stream of data
+* Parallel computing allows greater performance
+* Each processor works omn its own data at its own rate
+* Risks calculations and logic interfering with one another
+* Can even result in performance *worse* than the serial case
+
+---
+
+# Parallel Computing
+## Threads
+* Provide away for one program to execute many threads of computation
+* Threads are spawned to execute a specific function
+* The controlling function (itself a thread) can wait to join threads
+* This is when their execution ends
+* A whole course to themselves!
+
+---
+
+# Parallel Computing
+## Threads
+![Threads](./img/peerthreads.gif)
+
+---
+
+# Parallel Computing
+## Threads
+* C++11 provides a simple threading interface
+* Each opertaing system provides its own, more powerful threading
+ library
+* `std::thread` provides a common interface
+
+---
+
+# Parallel Computing
+## Threads
+### `<thread>`
+* `std::thread`, a thread class
+  * `std::thread::thread(` *`function`*`, `*`arg1`*`, ...)`
+     * constructor
+       * defines the function that the thread will execute
+       * the argument values to be passed to that call of the function
+  * `join( )`
+     * public member function
+       * pauses execution of the calling thread until the called thread
+         finishes
+* Much more available, but this is what we will use
+
+---
+
+# Parallel Computing
+## Threads
+### `<thread>`
+* `std::thread::this_thread`
+   * namespace
+     * Provides functions that operate on the thread from which they
+       are called
+   * `sleep_for()`
+      * Sleep the thread for a duration derived from `std::chrono`
+ 
+---
+
+# Parallel computing
+## Concurrency Problems
+* Deadlock
+* Resource stavation
+* Livelock
+* Race condition
+
+---
+
+# Parallel computing
+## Concurrency Problems
+### Dining Philosophers
+* A good example for introducing concurrency
+* Five philosphers at a circular table, each with a plate of noodles
+* Five chopsticks, arranged one between each pair of philosophers
+* The philosophers alternate between thinking and eating
+* To eat, they need two chopsticks
+* Usually presented with spaghetti and forks, but who needs two forks
+  to eat spaghetti?
+
+---
+
+# Parallel computing
+## Concurrency Problems
+
+# Dining Philosophers hands-on
+
+---
+
+# Parallel computing
+## Concurrency Problems
+### Explanation of some terms
+* Thread: A sequential set of operastions that can be interrupted
+* Mutex: mutual exclusion
+* Atomic: an operation that cannot be interrupted
+
+---
+
+# Parallel computing
+## Concurrency Problems
+### Problems: Deadlock
+* Each member of a group is waiting for another member to do something
+* Each philosopher has one chopstick, and is waiting for another to be
+  available
+* No-one gets to eat
+
+---
+
+# Parallel computing
+## Concurrency Problems
+### Solution: Try and wait
+* The fundamental solution is to break the symmetry of the problem
+* Try and wait
+* Try to get both chopsticks. If you can, eat
+* Else, put down both chopsticks, and wait for some time
+  before trying again
+* The philosophers are no longer all in the same state
+
+---
+
+# Parallel computing
+## Concurrency Problems
+
+# Try and wait hands-on
+
+---
+
+# Parallel computing
+## Concurrency Problems
+### Problems: Livelock
+* The above solution might result in the philosophers all changing
+  state at the same time
+* Everyone picks up their chopsticks at the same time
+* Waits the same length of time
+* Puts down their chopstick at the same time
+* Waits the same length of time
+* ...
+* Livelock looks a lot like deadlock (no work is done)
+* Except, the system is continually changing state
+
+---
+
+# Parallel computing
+## Concurrency Problems
+### Solution: Resource Hierarchy
+* Break the symmetry of the problem in the resources
+* Number the chopsticks 1-5
+* A philosopher cannot pick up the higher numbered chopstick until
+  they have the lower numbered in hand
+* P1 picks up C1, ..., P4 picks up C4
+* P5 is between C5 and C1, so must pick up C1 first, and cannot
+* P4 gets both C4 and C5, and is able to eat
+* Puts down C4 and C5, wherupon P3 can eat...
+* P5 can eat once P1 puts down C1
+
+---
+
+# Parallel computing
+## Concurrency Problems
+
+# Resource Heirarchy hands-on
+
+---
+
+# Parallel computing
+## Concurrency Problems
+### Problems: Resource Starvation
+* P5 can eat once P1 puts down C1
+* Unless P4 has picked up C5 already
+* Even without a dead- or livelock, resource starvation might occur
+* One philosopher never gets to eat
+* More generally, one of the workers never gets access to the shared resources
+
+---
+
+# Parallel computing
+## Concurrency Problems
+### Problems: Race condition
+* Philosopher 1 checks the chopstick either side of them are free and
+  goes to pick them up
+* In the meantime, P2 manages to both check and pick up C2 and C3
+* P1 goes to pick up a chopstick that isn't there
+* What happens next depends on the robustness and error handling of
+  the system
+
+---
+
+# Parallel computing
+## Concurrency Problems
+### Solution: Waiter/Arbitrator
+* Each philospher must ask the waiter for permission to pick up both
+  chopsticks
+* Only one philospher may pick up chopsticks at a time
+* Putting down chopsticks is always allowed
+* Reduces parallelism
+* Can be implemented using a mutex
+
+---
+
+# Parallel computing
+## Concurrency Problems
+### Mutex
+* A mutal exclusion
+* Also known as a lock
+* An object that can be raised or cleared by any worker
+* Raising and clearing the mutex are atomic operations
+  * They cannot be pre-empted by any other thread
+* Allow only one worker access to the protected region
+* Standard C++ since C++11
+
+---
+
+# Parallel computing
+## Concurrency Problems
+
+# Mutex waiter hands-on
+
+---
+
+# Parallel computing
+## Concurrency Problems
+### Other concurrency problems
+* Cigarette smokers problem
+* Producers-consumers problem
+* Readers-writers problem
+* Sleeping barber problem
+
+---
+
+# Parallel computing
+## Concurrency Problems
+### Solutions
+
+* Atomic operations
+* Mutexes
+* Semaphores
+* Busy waiting
+* Python's Global Interpreter Lock
+
+---
+
+# Parallel computing
+## Amdahl's Law
+* Nearly every program has an unavoidable serial part.
+* No amount of parallelisation can every speed this up.
+* Even if the parallel section is reduced to a negligible duration,
+  the serial part still needs to run.
+* Provides a lower bound on execution time.
+
+---
+
+# Parallel computing
+## Amdahl's Law
+### Amdahl's law hands-on
+* Once we have learned about OpenMP
+
+---
+
+# Parallel computing
+## Amdahl's Law
+### Flynn's Taxonomy
+Michael Flynn, 1966
+
+* SISD: single intrustion, single data. Older PCs and mainframes.
+* SIMD: single instruction, multiple data. Vectorized operations.
+* MISD: multiple instructions, single data. Fault tolerance,
+  e.g. Space Shuttle flight computer
+* MIMD: general parallel computing: HPC, modern PCs, laptops, phones.
+
+---
+
+# Parallel computing
+## Multicore
+
+(Picture)
+* Multiple logical CPUs (cores) on one physical CPU
+* Share L3 cache, memory and I/O
+* Logical cores can individually halted, interrupted or directed to
+  execute a particular thread
+
+---
+
+# Parallel computing
+## Multicore
+### Hyperthreading
+
+* Intel's stategy for converting pipelining into extra cores.
+* Duplicates state storage, but not execution hardware
+* Performance increase is highly application dependent
+  * Can be x2
+  * Can be worse that no HT at all
+* Contention of resources
+
+---
+
+# Parallel computing
+## Multicore
+### Multi core optimisation
+* Difficult to manage due to OS scheduling
+* Shared cache can be a benefit
+
+---
+
+# Parallel computing
+## High performance computing
+* Very large numbers of cores
+* Nodes with several CPUs and Several GB of memory
+* Fast interconnects between nodes
+* Best suited to highly parallel tasks with minimal communication
+  between nodes
+* Used to be 'supercomputing' and 'supercomputers'
+
+---
+
+# Parallel computing
+## High performance computing
+### Shared and distributed memory
+* A desktop computer or HPC node has shared memory
+  * All nodes and processes see the same memory
+* An overall supercomputer has distributed memory
+  * Different parts of the parallel problem can see different data
+* GPU computation has slow shared memory and fast distributed memory
+* Fast interconnects transfer data between nodes
+
+---
+
+# Parallel computing
+## High performance computing
+### Schedulers and job submission
+* One does not simply SSH into an HPC node
+* Jobs are run asynchronously
+* Priority
+* Best utilization of resources
+* Submit a job (usually a bash script) to a queue.
+* The submission script will contain settings such as numer of cores,
+  resources to use, maximum run time &c.
+
+---
+
+# Parallel computing
+## High performance computing
+### Different schedulers
+* Son of Grid Engine (Myriad, Grace &c.)
+* Slurm
+* Portable Batch System (PBS)
+  * All use the `qsub` family of programs
+
+---
+
+# Parallel computing
+## High performance computing
+### Queues
+* A job is committed to a queue
+* Depending on priority and available resources, jobs are usually
+  dispatched in order
+* Higher priority might be reserved for specific projects
+
+---
+
+# Parallel computing
+## High performance computing
+### Wall time limits
+* Jobs will have a time limit
+* If they don't finish in time, then the scheduler will finish them
+* Termination, no graceful shutdown
+
+---
+
+# Parallel computing
+## High performance computing
+### Nodes and interconnects
+* Nodes may be optimized for different workloads
+* Different queues might feed different nodes
+* Node types can be specified in the submission script
+* Nodes communicate via interconnects
+  * Infiniband
+  * 10G/40G/100G Ethernet
+  * Intel Omni-Path
+* Interconnect topology must be utilized to maximize performance
+  * All-to-all would be prohibitive
+  * n dimensional torus, hypercube, and others
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
